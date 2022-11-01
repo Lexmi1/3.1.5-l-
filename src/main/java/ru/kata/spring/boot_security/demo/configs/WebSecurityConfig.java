@@ -53,8 +53,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setUserDetailsService(userServiceImp);
         return authenticationProvider;
     }
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
-//        authenticationManagerBuilder.userDetailsService(userServiceImp).passwordEncoder(passwordEncoder());
-//    }
 }

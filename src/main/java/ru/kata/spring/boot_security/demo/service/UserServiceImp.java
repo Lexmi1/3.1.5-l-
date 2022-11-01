@@ -23,9 +23,7 @@ import java.util.stream.Collectors;
 public class UserServiceImp implements UserService, UserDetailsService {
 
     private final UsersRepository usersRepository;
-
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     public UserServiceImp(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
