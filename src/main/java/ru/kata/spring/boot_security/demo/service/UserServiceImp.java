@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositories.RolesRepository;
 import ru.kata.spring.boot_security.demo.repositories.UsersRepository;
 
 import java.util.Collection;
@@ -23,10 +24,12 @@ import java.util.stream.Collectors;
 public class UserServiceImp implements UserService, UserDetailsService {
 
     private final UsersRepository usersRepository;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
-    public UserServiceImp(UsersRepository usersRepository) {
+    public UserServiceImp(UsersRepository usersRepository, RolesRepository rolesRepository, RoleService roleService) {
         this.usersRepository = usersRepository;
+        this.roleService = roleService;
     }
 
     @Override
@@ -74,6 +77,20 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public Collection<? extends GrantedAuthority> grantedAuthorities(Collection<Role> roles) {
         return roles.stream().map(el -> new SimpleGrantedAuthority(el.getName())).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateUser(int id, User updatedUser) {
+        User user = getUser(id);
+        user.setName(updatedUser.getName());
+        user.setSurname(updatedUser.getSurname());
+        user.setUsername(updatedUser.getUsername());
+        user.setPassword(updatedUser.getPassword());
+
+        user.getRoles().clear();
+        updatedUser.getRoles().forEach(role ->
+                user.getRoles().add(roleService.findRoleByName(role.getName())));
+        usersRepository.save(user);
     }
 }
 

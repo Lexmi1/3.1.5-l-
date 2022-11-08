@@ -14,8 +14,8 @@ public class Role {
     private int id;
 
     @Column(name = "name")
-    @NotEmpty(message = "The field cannot be empty")
-    @Size(min = 2, max = 100, message = "The name must be between 2 and 50 characters")
+//    @NotEmpty(message = "The field cannot be empty")
+//    @Size(min = 2, max = 100, message = "The name must be between 2 and 50 characters")
     private String name;
 
     public Role() {

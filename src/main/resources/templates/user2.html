@@ -25,8 +25,8 @@
 
 <!--/* Menu buttons (admin and user) on the left */-->
 <div class="container-fluid g-0 align-items-start">
-<!--    <div class="row g-0" th:with="isAdmin=${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">-->
-        <div class="row g-0" th:with="isAdmin=${#request.isUserInRole('ROLE_ADMIN')}">
+    <!--    <div class="row g-0" th:with="isAdmin=${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">-->
+    <div class="row g-0" th:with="isAdmin=${#request.isUserInRole('ROLE_ADMIN')}">
 
         <div class="col-2 nav flex-column nav-pills fs-5 py-1 my-3" id="v-pills-tab" role="tablist"
              aria-orientation="vertical" style="width: 280px;">
@@ -34,7 +34,7 @@
                href="#v-pills-admin" role="tab"
                aria-controls="v-pills-admin" aria-selected="false">Admin</a>
             <a th:class="${isAdmin} ? 'nav-link' : 'nav-link active'" id="v-pills-user-tab" data-bs-toggle="pill"
-               href="#v-pills-user" role="tab"
+               href="user2.html#v-pills-user" role="tab"
                aria-controls="v-pills-user" aria-selected="true">User</a>
         </div>
 
@@ -140,7 +140,7 @@
                                                                                class="form-control mx-auto"
                                                                                style="width: 250px;"></label>
                                                                     <label class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold">Password
-                                                                        <input name="password" th:value="${user.password}" type="text"
+                                                                        <input name="password" value="" type="text"
                                                                                class="form-control mx-auto"
                                                                                style="width: 250px;"
                                                                                placeholder="Type new password"></label>
@@ -333,7 +333,6 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Surname</th>
-                                    <th scope="col">Username</th>
                                     <th scope="col">Role</th>
                                 </tr>
                                 </thead>

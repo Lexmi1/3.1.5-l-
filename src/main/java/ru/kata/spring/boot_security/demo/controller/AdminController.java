@@ -1,14 +1,14 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
-import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,46 +22,32 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String adminPart() {
+    public String getUsers(Model model, Principal principal) {
+        User authorizedUser = userServiceImp.findByUsername(principal.getName());
+        User user = new User();
+        model.addAttribute("userList", userServiceImp.getUsers());
+        model.addAttribute("user", user);
+        model.addAttribute("authorizedUser", authorizedUser);
         return "admin";
     }
 
-    @GetMapping("/users")
-    public String getUsers(Model model) {
-        model.addAttribute("userList", userServiceImp.getUsers());
-        return "users";
-    }
+    @PostMapping()
+    public String create(@ModelAttribute("user") User user) {
 
-    @GetMapping("/users/new")
-    public String addUser(Model model) {
-
-        User user = new User();
-        model.addAttribute("user", user);
-
-        return "newUser";
-    }
-
-    @PostMapping("/users")
-    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "newUser";
-        }
         userServiceImp.save(user);
 
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
-    @PatchMapping("/users/update")
-    public String update(@RequestParam("userId") int id, Model model) {
-        model.addAttribute("user", userServiceImp.getUser(id));
-
-        return "newUser";
+    @PatchMapping("/{id}")
+    public String update2(@ModelAttribute("user") User user,
+                         @PathVariable("id") int id) {
+        userServiceImp.updateUser(id, user);
+        return "redirect:/admin";
     }
-
-    @DeleteMapping("/users/delete")
-    public String delete(@RequestParam("userId") int id) {
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
         userServiceImp.delete(id);
-
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 }
