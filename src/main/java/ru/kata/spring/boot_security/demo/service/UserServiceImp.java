@@ -26,6 +26,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private final UsersRepository usersRepository;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Autowired
     public UserServiceImp(UsersRepository usersRepository, RolesRepository rolesRepository, RoleService roleService) {
         this.usersRepository = usersRepository;
@@ -68,17 +69,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
         usersRepository.save(user);
     }
 
-    @Override
-    @Transactional
-    public void delete(int id) {
-        usersRepository.deleteById(id);
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> grantedAuthorities(Collection<Role> roles) {
-        return roles.stream().map(el -> new SimpleGrantedAuthority(el.getName())).collect(Collectors.toList());
-    }
-
     @Transactional
     public void updateUser(int id, User updatedUser) {
         User user = getUser(id);
@@ -91,6 +81,17 @@ public class UserServiceImp implements UserService, UserDetailsService {
         updatedUser.getRoles().forEach(role ->
                 user.getRoles().add(roleService.findRoleByName(role.getName())));
         usersRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        usersRepository.deleteById(id);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> grantedAuthorities(Collection<Role> roles) {
+        return roles.stream().map(el -> new SimpleGrantedAuthority(el.getName())).collect(Collectors.toList());
     }
 }
 

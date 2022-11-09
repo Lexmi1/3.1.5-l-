@@ -1,8 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
@@ -15,26 +13,17 @@ public class User {
     private int id;
 
     @Column(name = "name")
-//    @NotEmpty(message = "The field cannot be empty")
-//    @Size(min = 2, max = 100, message = "The name must be between 2 and 50 characters")
     private String name;
 
     @Column(name = "surname")
-//    @NotEmpty(message = "The field cannot be empty")
-//    @Size(min = 2, max = 100, message = "The surname must be between 2 and 50 characters")
     private String surname;
 
     @Column(name = "username")
-//    @NotEmpty(message = "The field cannot be empty")
-//    @Size(min = 2, max = 100, message = "The surname must be between 2 and 50 characters")
     private String username;
 
     @Column(name = "password")
-//    @NotEmpty(message = "The field cannot be empty")
-//    @Size(min = 2, max = 100, message = "The surname must be between 2 and 50 characters")
     private String password;
 
-//    @NotEmpty
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = {
             @JoinColumn(name = "user_id")},

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,10 +13,10 @@
 <div class="container" style="max-width: 100%">
     <div class="row navbar navbar-dark bg-dark pd-0 pt-0">
         <div class="col">
-            <b class="text-white" th:utext="${authorizedUser.username}"></b>
-            <span class="text-white" th:utext="' with roles: '"></span>
+            <b class="text-white" style="font-size:24px" th:utext="${authorizedUser.username}"></b>
+            <span class="text-white" style="font-size:19px" th:utext="' with roles: '"></span>
             <th:block th:each="role : ${authorizedUser.roles}">
-                <span class="text-white" th:utext="${#strings.substringAfter(role.name, 'ROLE_')}"></span>
+                <span class="text-white" style="font-size:20px" th:utext="${#strings.substringAfter(role.name, 'ROLE_')}"></span>
             </th:block>
         </div>
         <div class="col-1"><a class="nav-link active text-white-50" href="/logout">Logout</a></div>

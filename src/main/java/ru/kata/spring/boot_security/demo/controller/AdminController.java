@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +39,12 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update2(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id) {
+    public String update(@ModelAttribute("user") User user,
+                          @PathVariable("id") int id) {
         userServiceImp.updateUser(id, user);
         return "redirect:/admin";
     }
+
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         userServiceImp.delete(id);

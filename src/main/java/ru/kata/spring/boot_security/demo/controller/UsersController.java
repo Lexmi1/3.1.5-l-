@@ -22,9 +22,6 @@ public class UsersController {
 
     @GetMapping()
     public String userShowInfo(Principal principal, Model model) {
-//        User user = userServiceImp.findByUsername(principal.getName());
-//        model.addAttribute("user", user);
-//        return "user";
         User authorizedUser = userServiceImp.findByUsername(principal.getName());
         User user = new User();
         model.addAttribute("userList", userServiceImp.getUsers());
@@ -32,5 +29,4 @@ public class UsersController {
         model.addAttribute("authorizedUser", authorizedUser);
         return "user";
     }
-
 }

@@ -25,8 +25,7 @@
 
 <!--/* Menu buttons (admin and user) on the left */-->
 <div class="container-fluid g-0 align-items-start">
-<!--    <div class="row g-0" th:with="isAdmin=${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">-->
-        <div class="row g-0" th:with="isAdmin=${#request.isUserInRole('ROLE_ADMIN')}">
+    <div class="row g-0" th:with="isAdmin=${#request.isUserInRole('ROLE_ADMIN')}">
 
         <div class="col-2 nav flex-column nav-pills fs-5 py-1 my-3" id="v-pills-tab" role="tablist"
              aria-orientation="vertical" style="width: 280px;">
@@ -107,9 +106,9 @@
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title" id="editModalLabel">Edit
                                                                     user</h4>
-                                                                <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
+                                                                <button class="close"
+                                                                        data-bs-dismiss="modal">x
+                                                                </button>
                                                             </div>
                                                             <div class="modal-body">
 
@@ -124,26 +123,27 @@
                                                                                style="width: 250px;"></label>
                                                                     <label class="form-label d-block mx-auto pt-1 mt-2 mb-0 text-center fs-5 font-weight-bold">Name
                                                                         <input name="name" th:value="${user.name}"
-                                                                               type="text"
+                                                                               required type="text"
                                                                                class="form-control mx-auto"
                                                                                style="width: 250px;"></label>
                                                                     <label class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold">Surname
                                                                         <input name="surname"
                                                                                th:value="${user.surname}"
-                                                                               type="text"
+                                                                               required type="text"
                                                                                class="form-control mx-auto"
                                                                                style="width: 250px;"></label>
                                                                     <label class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold">Username
                                                                         <input name="username"
                                                                                th:value="${user.username}"
-                                                                               type="text"
+                                                                               required type="text"
                                                                                class="form-control mx-auto"
                                                                                style="width: 250px;"></label>
                                                                     <label class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold">Password
-                                                                        <input name="password" th:value="${user.password}" type="text"
+                                                                        <input name="password" value="" required type="text"
                                                                                class="form-control mx-auto"
                                                                                style="width: 250px;"
                                                                                placeholder="Type new password"></label>
+
                                                                     <label class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold">
 
                                                                         <select name="roles"
@@ -278,19 +278,19 @@
                                         <label for="Name"
                                                class="form-label d-block mx-auto pt-1 mt-2 mb-0 text-center fs-5 font-weight-bold"
                                                style="width: 380px;">Name</label>
-                                        <input th:field="*{name}" type="text" class="form-control mx-auto"
+                                        <input th:field="*{name}" required type="text" class="form-control mx-auto"
                                                style="width: 380px;" id="Name" placeholder="Name">
 
                                         <label for="Surname"
                                                class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold"
                                                style="width: 380px;">Surname</label>
-                                        <input th:field="*{surname}" type="text" class="form-control mx-auto"
+                                        <input th:field="*{surname}" required type="text" class="form-control mx-auto"
                                                style="width: 380px;" id="Surname" placeholder="Surname">
 
                                         <label for="Username"
                                                class="form-label d-block mx-auto pt-1 mt-3 mb-0 text-center fs-5 font-weight-bold"
                                                style="width: 380px;">Username</label>
-                                        <input th:field="*{username}" type="text" class="form-control mx-auto"
+                                        <input th:field="*{username}" required type="text" class="form-control mx-auto"
                                                style="width: 380px;" id="Username" placeholder="Username">
 
                                         <label for="passwordInput"
