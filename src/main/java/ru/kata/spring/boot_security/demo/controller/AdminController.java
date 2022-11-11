@@ -5,19 +5,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final UserServiceImp userServiceImp;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserServiceImp userServiceImp) {
+    public AdminController(UserServiceImp userServiceImp, RoleService roleService) {
         this.userServiceImp = userServiceImp;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -31,8 +35,8 @@ public class AdminController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
-
+    public String create(@ModelAttribute("user") User user, @RequestParam("roles") ArrayList<Integer> roles) {
+        user.setRoles(roleService.findByIdRoles(roles));
         userServiceImp.save(user);
 
         return "redirect:/admin";
@@ -40,7 +44,9 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user,
-                          @PathVariable("id") int id) {
+                         @RequestParam("roles") ArrayList<Integer> roles,
+                         @PathVariable("id") int id) {
+        user.setRoles(roleService.findByIdRoles(roles));
         userServiceImp.updateUser(id, user);
         return "redirect:/admin";
     }

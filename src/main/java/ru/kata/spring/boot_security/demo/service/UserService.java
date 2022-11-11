@@ -19,4 +19,8 @@ public interface UserService {
     User findByUsername(String username);
 
     Collection<? extends GrantedAuthority> grantedAuthorities(Collection<Role> roles);
+
+    void addDefaultUser();
+
+    void updateUser(User user);
 }
