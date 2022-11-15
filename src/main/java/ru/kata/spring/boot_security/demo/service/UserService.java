@@ -22,5 +22,5 @@ public interface UserService {
 
     void addDefaultUser();
 
-    void updateUser(User user);
+    void updateUser(int id, User updatedUser);
 }

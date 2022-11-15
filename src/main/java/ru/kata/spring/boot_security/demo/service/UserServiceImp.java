@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -32,25 +31,21 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<User> getUsers() {
         return userDao.getUsers();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User getUser(int id) {
         return userDao.getUser(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return userDao.getUserByLogin(username);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         if (user == null) {
@@ -60,13 +55,12 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);
     }
 
-    @Transactional
+    @Override
     public void updateUser(int id, User updatedUser) {
         User user = getUser(id);
         user.setName(updatedUser.getName());
@@ -79,7 +73,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
         userDao.delete(id);
     }
@@ -89,12 +82,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
         return roles.stream().map(el -> new SimpleGrantedAuthority(el.getName())).collect(Collectors.toList());
     }
 
-    @Override
-    public void updateUser(User user) {
-        System.out.println("sda");
-    }
-
-    @Transactional
     @Override
     public void addDefaultUser() {
         Set<Role> roleSet = new HashSet<>();
