@@ -27,7 +27,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public UserServiceImp(UserDao userDao, RoleService roleService) {
         this.userDao = userDao;
         this.roleService = roleService;
-        addDefaultUser();
+//        для теста
+//        addDefaultUser();
     }
 
     @Override

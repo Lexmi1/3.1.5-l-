@@ -15,7 +15,8 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     public RoleServiceImpl(RoleDAO roleDAO) {
         this.roleDAO = roleDAO;
-        addDefaultRole();
+//       для теста
+//        addDefaultRole();
     }
 
     @Override
